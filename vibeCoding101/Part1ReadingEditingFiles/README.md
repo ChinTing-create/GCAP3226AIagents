@@ -129,3 +129,45 @@ After mastering Part 1:
 ---
 
 **Remember**: The goal is not just to get the AI to do work, but to learn how to **communicate effectively** with AI tools in a professional context!
+
+---
+
+# How to Retrieve Data from Hong Kong Census Dataset via API
+
+Dataset: https://data.gov.hk/en-data/dataset/hk-censtatd-tablechart-110-01001
+
+## Steps to Retrieve Data via API
+1. Go to the dataset page and look for a section labeled “API”, “Data Resource”, or “Download”.
+2. If an API is available, you will see a URL ending in `.json`, `.csv`, etc.
+3. Copy this URL and paste it into your browser to download the data, or use Excel/Google Sheets to import the data.
+
+## Example API Endpoint
+For many datasets, the API endpoint looks like:
+```
+https://data.gov.hk/api/3/action/datastore_search?resource_id=110-01001
+```
+You can use this URL in your browser or in code to retrieve the data.
+
+## Pseudocode for Non-Programmers
+- Step 1: Open your web browser.
+- Step 2: Copy the API URL from the dataset page.
+- Step 3: Paste the URL into the browser and press Enter.
+- Step 4: Download the data file (CSV or JSON).
+- Step 5: Open the file with Excel or Google Sheets.
+
+## Python Example
+```python
+import requests
+import pandas as pd
+
+api_url = "https://data.gov.hk/api/3/action/datastore_search?resource_id=110-01001"
+response = requests.get(api_url)
+if response.status_code == 200:
+   data = response.json()
+   records = data['result']['records']
+   df = pd.DataFrame(records)
+   df.to_csv("census_data.csv", index=False)
+   print("Data downloaded and saved as census_data.csv")
+else:
+   print("Failed to fetch data. Status code:", response.status_code)
+```
